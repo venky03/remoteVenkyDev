@@ -1,0 +1,9 @@
+<apex:page controller="OrganisationEmailCollector">
+ <apex:form >
+  <apex:commandButton value="send" action="{!send}"/>
+  <apex:selectList value="{!fromAddr}" size="1">
+            <apex:selectOptions value="{!items}"/>
+        </apex:selectList>
+  
+ </apex:form>
+</apex:page>

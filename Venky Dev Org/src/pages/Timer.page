@@ -1,0 +1,18 @@
+<apex:page id="thePage" showHeader="false"><html>
+<body>
+<center>
+<div id="clock"></div>
+</center><br/>
+<div align="right">
+<button onclick="int=window.clearInterval(int);" id="stop">Stop Clock</button>
+</div>
+</body><script type="text/javascript">
+var int = self.setInterval("clock()",1000);
+function clock()
+{
+    var d=new Date();
+    var t=d.toLocaleTimeString();
+    document.getElementById("clock").innerHTML = "<B>" + t + "</B>";
+}
+</script>
+</html></apex:page>

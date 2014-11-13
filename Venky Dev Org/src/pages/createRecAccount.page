@@ -1,0 +1,26 @@
+<apex:page standardController="Account" extensions="DetailButtonController" action="{!doSomething}">
+<script src="/soap/ajax/19.0/connection.js"></script>
+<script src="/soap/ajax/19.0/apex.js"></script> 
+<script>
+
+alert('123');
+window.onload = function() {
+alert('hi');
+if('{!account.Show_Message__c}' == 'Yes') {
+alert('display msg');
+sforce.connection.sessionId = "{!$Api.Session_ID}";
+ var account = new sforce.SObject("Account");
+  //update that account
+  account.id = '{!account.id}';
+  account.Show_Message__c= 'No';
+  result = sforce.connection.update([account]); 
+  if (result[0].getBoolean("success")) {
+    alert("account with id " + result[0].id + " updated");
+  } else {
+    alert("failed to update account " + result[0]);
+  }
+}
+}
+</script>
+{!account.name}
+</apex:page>

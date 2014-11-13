@@ -1,0 +1,9 @@
+<apex:page controller="AccNameDisp" sidebar="false" showHeader="false">
+       <!-- <apex:repeat value="{!lstAcc}" var="acc">
+            <div> Account {!acc.Name} </div>
+            <div id="div1" style="page-break-before: always;"></div>
+        </apex:repeat>
+        -->
+        <!-- <iframe src='/servlet/servlet.FileDownload?file=01590000005dBg3' /> -->
+        <apex:outputlink value="/servlet/servlet.FileDownload?file=01590000005dBg3" id="theIframe">Vlivk here</apex:outputLink>
+</apex:page>

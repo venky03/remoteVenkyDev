@@ -1,0 +1,6 @@
+<apex:page controller="CSVcontroller" action="{!autorun}" >
+  <!-- Begin Default Content REMOVE THIS -->
+  Click here to download the csv file:
+    <apex:outputLink value="https://c.ap1.content.force.com/servlet/servlet.FileDownload?file={!DocId}" id="theLink">Download</apex:outputLink>
+  <!-- End Default Content REMOVE THIS -->
+</apex:page>

@@ -1,0 +1,5 @@
+<apex:page standardController="Account" extensions="ListButtonController" recordSetVar="TestRecords">
+    <apex:form >
+        <apex:commandButton value="Do something" action="{!doSomething}"/>
+    </apex:form>
+</apex:page>

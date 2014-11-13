@@ -1,0 +1,39 @@
+<apex:page controller="ProductDisplayController" sidebar="false">
+<html xmlns:ng="http://angularjs.org" ng-app="hello" lang="en">
+    <head>
+        <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap.no-icons.min.css" rel="stylesheet"/>
+        <link href="https://netdna.bootstrapcdn.com/font-awesome/2.0/css/font-awesome.css" rel="stylesheet"/>
+        <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.js"/>
+    </head>
+    <script type="text/javascript">
+    //alert("inside script");
+        var myapp = angular.module('hello', []);
+        var contrl=myapp.controller('prodDIV', function ($scope) {
+            $scope.items = {!lstProducts};
+            //alert("hi"+JSON.stringify($scope.items));
+        
+        });
+        contrl.$inject = ['$scope'];
+    </script>
+    <body>
+        <div ng-controller="prodDIV">
+        <input type = "text" ng-model ="searchtext" />
+        {{ searchtext }}
+            <table class="table  table-hover">
+                <thead>
+                    <tr>
+                        <th class="id">Product Name&nbsp;</th>
+                        <th class="name">Product Code&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="prod in items | filter:searchtext">
+                        <td>{{prod.productName}}</td>
+                        <td>{{prod.productCode}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>         
+</apex:page>

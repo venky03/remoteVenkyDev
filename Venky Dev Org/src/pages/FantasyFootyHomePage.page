@@ -1,0 +1,54 @@
+<apex:page controller="PortalLoginController">
+<link href="{!URLFOR($Resource.styles, 'styles/layout.css')}" rel="stylesheet" />
+<!--  <apex:includeScript value="{!URLFOR($Resource.styles, 'styles/layout.css')}"/> -->
+<apex:includeScript value="{!URLFOR($Resource.scripts, 'scripts/jquery.slidepanel.setup.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.scripts, 'scripts/jquery.cycle.min.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.scripts, 'scripts/jquery.cycle.setup.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.scripts, 'scripts/jquery-1.4.1.min.js')}"/>
+  
+<div class="wrapper col0">
+  <div id="topbar">
+    <div id="slidepanel">
+      <div class="topbox">
+        <h2>Fantasy EPL</h2>
+        <p><apex:image url="{!URLFOR($Resource.footballImages,
+                  'footballImages/demo/ball.jpg')}"	/></p>
+      </div>
+	<div class="topbox">
+        <h2>Register if you have not registerd yet</h2>
+        <apex:form >
+            <b>Register Form</b> 
+            <apex:outputLabel value="Username:" />
+              <apex:inputField id="rname" value="{!acc.UserName__c}" />
+             <apex:outputLabel value="Password:" />
+              <apex:inputField id="rpass" value="{!acc.Password__c}" />
+            <p>
+			  <apex:commandButton id="register" action="{!saveRec}" value="Save"/>
+              <!--<input type="submit" name="register" id="register" value="Register" /> -->
+              &nbsp;
+			  <apex:commandButton id="register_reset" action="{!reset}" value="Reset"/>
+              <!--<input type="reset" name="register_reset" id="register_reset" value="Reset" /> -->
+            </p>
+        </apex:form>
+      </div>
+      <div class="topbox last">
+        <h2>Login Here:</h2>
+        <apex:form >
+			<apex:outputLabel value="Login Form:" />
+            <apex:outputLabel value="Username:" />
+			  <apex:inputField id="login_name" value="{!acc.UserName__c}" />
+            <apex:outputLabel value="Password:" />
+			  <apex:inputField id="login_password" value="{!acc.Password__c}" />
+           
+            <p>
+			<apex:commandButton id="login" action="{!login}" value="Login"/>
+              &nbsp;
+			  <apex:commandButton id="reset" action="{!reset}" value="Reset"/>
+            </p>
+        </apex:form>
+      </div>
+       <br class="clear" />
+    </div>
+ </div>         
+ </div>
+</apex:page>

@@ -1,0 +1,8 @@
+<apex:page sidebar="false" showHeader="false">
+<apex:form >
+  <!-- Begin Default Content REMOVE THIS -->
+  <apex:selectList ><apex:selectOption >A</apex:selectOption></apex:selectList>
+Popup Working out
+  <!-- End Default Content REMOVE THIS -->
+  </apex:form>
+</apex:page>

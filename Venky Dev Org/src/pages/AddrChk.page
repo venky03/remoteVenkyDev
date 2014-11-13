@@ -1,0 +1,8 @@
+<apex:page standardController="Merchandise1__c" extensions="myControllerExtension">
+<apex:form >
+City:<apex:inputField value="{!m1.City__c}" />
+Street:<apex:inputField value="{!m1.Street__c}" />
+Country:<apex:inputField value="{!m1.Country__c}" />
+<apex:commandButton value="save" action="{!save}" />
+</apex:form>
+</apex:page>

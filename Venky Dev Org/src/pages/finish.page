@@ -1,0 +1,18 @@
+<apex:page controller="Result">
+<apex:pageBlock >
+<h1>Congratulations-You have completed the test successfully!!!</h1>
+<br/><br/>
+<apex:pageBlockSection >
+
+Your Score is : <apex:outputText value="{!score}"/>
+
+Total Questions Attempted : <apex:outputText value="{!tQuestions}"/>
+
+Total questions answered correct : <apex:outputText value="{!rQues}"/>
+
+Total questions answered wrong : <apex:outputText value="{!wQues}"/>
+
+Result :<b><apex:outputText value="{!res}"/></b> 
+</apex:pageBlockSection>
+</apex:pageBlock>
+</apex:page>

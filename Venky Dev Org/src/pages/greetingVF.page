@@ -1,0 +1,16 @@
+<apex:page Controller="TableController">
+  
+    <apex:form >
+        <apex:inputText value="{!anum}"/> <p/>
+        <apex:commandButton value="Save" action="{!multiply}" rerender="tab1"/>
+    </apex:form>
+    
+    <apex:pageBlock ><apex:pageMessages />
+<apex:pageBlockSection title=" {!anum} Table" id="tab1" collapsible="true">
+<apex:pageBlockTable value="{!val}" var="a" width="10px">
+<apex:column value="{!a}" width="10%"/>
+
+</apex:pageBlockTable>
+</apex:pageBlockSection>
+</apex:pageBlock>
+</apex:page>

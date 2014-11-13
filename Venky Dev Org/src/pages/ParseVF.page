@@ -1,0 +1,11 @@
+<apex:page controller="XMLWrite_Try" sidebar="false" showHeader="false" >
+	   
+	   <apex:form >
+	  <!--     <apex:inputtextarea cols="40" rows="20" value="{!textToParse}"  />  -->
+	     <apex:inputtextarea cols="40" rows="20" id="result" value="{!inventoryID}"/>    
+	     <br />
+	     <apex:commandButton value="Parse" action="{!parse}" reRender="result"/>
+	 
+	   </apex:form>
+	 
+	</apex:page>

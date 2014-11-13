@@ -1,0 +1,45 @@
+<apex:page controller="CB_CowAndBullController" showHeader="false" sidebar="false">
+    <apex:form id="FRM">
+        <apex:pageBlock id="PB" title="Cow And Bull">
+            
+            <apex:pageMessage severity="INFO" escape="false">
+                1) Enter 4 digit number which have all digits unique and is not starting from 0 
+
+
+                2) Cows: Digits from your number matches computer's number at same index 
+
+                e.g: You Enter -> 1234 and Computer Number -> 1960 
+
+                1 matches on same index so it will be counted as cow 
+
+
+                3) Bulls: Digits from your number matches computer's number but not on same index 
+
+                e.g: You Enter -> 1234 and Computer Number -> 9120 
+
+                1 and 2 matches but not on same index so it will be counted as bull
+            </apex:pageMessage>
+            <apex:pageMessages id="PM"/>
+            
+            <apex:pageBlockButtons rendered="{!IF(showButton , true , false)}">
+                <apex:commandButton value="Check C&B" action="{!CheckCandB}"/>
+            </apex:pageBlockButtons>
+            
+            <!-- <apex:outputText value="Computer Generated Number : {!CompNumber}"/> -->
+            
+            <apex:pageBlockSection id="PBS1">
+                <apex:pageBlockSectionItem id="PBSI1">
+                    <apex:outputLabel value="Please Enter Your Number:"/>
+                    <apex:inputText size="4" value="{!userEnteredNUmber}"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockTable rendered="{!IF(toDisplayWrapperLst.size > 0 , true, false)}" value="{!toDisplayWrapperLst}" var="wrap">
+                <apex:column headerValue="Your Input" value="{!wrap.userInput}"/>
+                <apex:column headerValue="Cows" value="{!wrap.cow}"/>
+                <apex:column headerValue="Bulls" value="{!wrap.bull}"/>
+            </apex:pageBlockTable>
+        
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

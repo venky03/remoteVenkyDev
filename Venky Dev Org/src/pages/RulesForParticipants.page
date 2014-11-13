@@ -1,0 +1,9 @@
+<apex:page standardController="Contact" >
+<h3>Rules for the quiz</h3>
+    <ul>
+        <li>1.User should enter their name,course and email id to write the quiz.</li>
+        <li>2.On saving the details,user will be redirected to a page where he needs to click start quiz button to start the quiz</li>
+        <li>3.The quiz has 10 questions with 10 minutes in total to complete.</li>
+        <li>4.Once the user submits the test,his score will be displayed and his performance can be reviewed.</li>
+    </ul>
+</apex:page>

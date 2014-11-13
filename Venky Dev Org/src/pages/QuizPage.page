@@ -1,0 +1,53 @@
+<apex:page standardController="Quiz__c" extensions="QuizController" language="en" id="p1">
+  
+  
+  <table width="100%">
+ <tr><td width="100%" align="center"><span id="theTime" class="timeClass"></span></td></tr>
+</table>
+  <apex:pageBlock >
+   <apex:pageBlockSection title="Questions"  id="tab1">
+  <apex:form >
+  
+  
+  
+        Question {!counter} : <apex:outputLabel value="{!question}"/>
+        
+      <apex:selectRadio value="{!selectedChoice}" layout="pageDirection" id="radio1">
+          <apex:selectOption itemLabel="{!option1}" itemValue="{!option1}"></apex:selectOption>
+          <apex:selectOption itemLabel="{!option2}" itemValue="{!option2}"></apex:selectOption>
+          <apex:selectOption itemLabel="{!option3}" itemValue="{!option3}"></apex:selectOption>
+          <apex:selectOption itemLabel="{!option4}" itemValue="{!option4}"></apex:selectOption>
+      </apex:selectRadio>
+        <apex:commandButton value="Next" action="{!getQuestion}" rendered="{!if((counter<10),true,false)}"  rerender="tab1"/>
+        
+        <apex:commandButton value="Submit" action="{!anotherPage}" rendered="{!if((counter=10),true,false)}" rerender="tab1"/>
+        <apex:actionFunction name="anotherPage" action="{!anotherPage}" />
+       </apex:form>
+      </apex:pageBlockSection>
+  </apex:pageBlock>
+<script language="JavaScript" type="text/javascript">
+
+var sec = 00;   // set the seconds
+var min = 05;   // set the minutes
+
+function countDown() {
+   sec--;
+  if (sec == -01) {
+   sec = 59;
+   min = min - 1; }
+  else {
+   min = min; }
+
+if (sec<=9) { sec = "0" + sec; }
+
+  time = (min<=9 ? "0" + min : min) + " min and " + sec + " sec ";
+
+if (document.getElementById) { document.getElementById('theTime').innerHTML = time; }
+
+SD=window.setTimeout("countDown();", 1000);
+if (min == '00' && sec == '00') { sec = "00"; window.clearTimeout(SD);window.setTimeout(anotherPage,100); }
+}
+window.onload = countDown;
+</script>
+  
+</apex:page>

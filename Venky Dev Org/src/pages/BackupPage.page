@@ -1,0 +1,265 @@
+<apex:page >
+	
+	<title>Venky EPL Player List</title>
+	<link href="drag_css/easyui.css" rel="stylesheet" />
+	
+	<!--  <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>-->
+	<apex:includeScript value="http://code.jquery.com/jquery-1.6.1.min.js"/>
+	<!-- <script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>-->
+	<apex:includeScript value="http://www.jeasyui.com/easyui/jquery.easyui.min.js"/>
+	<style type="text/css">
+		.ven{
+			color:	#EFFBFB;
+			font-family:verdana, Arial, Helvetica, sans-serif;
+			font-size:18px;
+			position:absolute;left:500px;			
+		}
+		.ven1{
+				
+			color:	#EFFBFB;
+			font-family:verdana, Arial, Helvetica, sans-serif;
+			font-size:18px;
+
+		}
+		.sty{
+			
+		}
+		.bas{
+			position:fixed;top:60px;left:440px;
+		}
+		.bas1{
+		position:relative;top:70px;	}
+		body{
+	margin:0;
+	padding:0;
+	font-size:12px;
+	font-family:verdana, Arial, Helvetica, sans-serif;
+	color:#333333;
+	
+	}
+		H3{
+			color:rgb(74, 81, 85);
+			font-size:18px;
+		}
+		.products{
+			list-style:none;
+			margin-right:300px;
+			padding:0px;
+			height:100%;
+		}
+		.products li{
+			display:inline;
+			float:left;
+			margin:10px;
+		}
+		.item{
+			display:block;
+			text-decoration:none;
+		}
+		.item img{
+			border:1px solid #333;
+		}
+		.item p{
+			margin:0;
+			font-weight:bold;
+			text-align:center;
+			color:#c3c3c3;
+		}
+		.cart{
+			position:fixed;
+			right:0;
+			top:0;
+			width:300px;
+			height:100%;
+			background:#ccc;
+			padding:0px 10px;
+		}
+		h1{
+			text-align:center;
+			color:#555;
+		}
+		h2{
+			position:absolute;
+			font-size:16px;
+			left:10px;
+			bottom:20px;
+			color:#555;
+		}
+		.top1{
+			text-align:right;
+
+		}
+	</style>
+	<script>
+		var totalCost = 0;		
+		var data = {"total":0,"rows":[]};
+		var playerlist="";
+function showPlayers(str)
+{
+	var tt=document.getElementById("player");
+	while (tt.hasChildNodes()) {
+    tt.removeChild(tt.lastChild);
+}
+
+var xmlhttp;    
+
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+   //window.alert(xmlhttp.responseText);
+ var str=xmlhttp.responseText;
+ var n=str.split("-");
+
+	
+
+ for (var i=0;i<n.length;i+=2)
+ {
+	
+
+
+
+
+	var par=document.createElement("p");
+	var par1=document.createElement("p");
+	var d=document.createElement("div");
+	par.innerHTML=n[i];
+	par1.innerHTML=n[i+1];
+	d.appendChild(par);
+	d.appendChild(par1);
+
+	var im=document.createElement("img");
+	im.setAttribute("src","images/"+n[i]+".jpg");
+	
+	var anc=document.createElement("a");
+	anc.setAttribute("href","#");
+	anc.setAttribute("class","item");
+	anc.appendChild(im);
+	anc.appendChild(d);
+	var list=document.createElement("li");
+	list.appendChild(anc);
+	
+	tt.appendChild(list);
+ }
+tt.removeChild(tt.lastChild);
+	
+		
+			
+		$(function(){
+			$('#cartcontent').datagrid({
+				singleSelect:true
+			});
+			$('.item').draggable({
+				revert:true,
+				proxy:'clone',
+				onStartDrag:function(){
+					$(this).draggable('options').cursor = 'not-allowed';
+					$(this).draggable('proxy').css('z-index',10);
+				},
+				onStopDrag:function(){
+					$(this).draggable('options').cursor='move';
+				}
+			});
+			$('.cart').droppable({
+				onDragEnter:function(e,source){
+					$(source).draggable('options').cursor='auto';
+				},
+				onDragLeave:function(e,source){
+					$(source).draggable('options').cursor='not-allowed';
+				},
+				onDrop:function(e,source){
+					var name = $(source).find('p:eq(0)').html();
+					var price = $(source).find('p:eq(1)').html();
+					function addProduct(name,price){
+			function add(){
+				var flag=0;	
+				for(var i=0; i<data.total; i++){
+					var row = data.rows[i];
+					if (row.name == name){
+						flag=1;
+					//	row.quantity += 1;
+						return;
+					}
+				}
+				data.total += 1;
+
+				data.rows.push({
+					name:name,
+					quantity:1,
+					price:price
+				});
+			}
+			add();
+			if(data.total<12){
+			totalCost += price;//window.alert(data.total);
+			$('#cartcontent').datagrid('loadData', data);
+			$('div.	.total').html('Total: $'+totalCost);
+		}}
+					addProduct(name, parseFloat(price.split('$')[1]));
+					playerlist+=name+"-"+parseFloat(price.split('$')[1])+"-";
+					
+				}
+			});
+		});
+    }
+  }
+
+
+
+
+
+
+xmlhttp.open("GET","getPlayer?q="+str,false);
+xmlhttp.send();
+}
+
+
+function addPlayers() {
+var rr=document.getElementById("uname").innerHTML;
+//window.alert(rr);
+window.location.assign("addPlayers?playerlist="+playerlist+"&uname="+rr);
+}
+</script>
+
+<apex:form >
+<body >
+	<h3 class="ven" id="uname">Team</h3>
+	<h3 class="ven1"></h3>
+	<div class="bas">
+	<select class="sty" id="sel" onchange="showPlayers(this.value)">
+				<option>Player List Based on position</option>
+				<option value="striker">Striker's List</option>
+				<option value="midfielder">Midfielder's List</option>
+				<option value="defender">Defender's List</option>
+				<option value="gk">Goal Keeper's List</option>
+			</select><br/>	
+	</div>
+
+	<div class="bas1">
+	<ul class="products" id="player">
+	</ul>
+	</div>
+	<div class="cart">
+		<h1>Form your team<br/>Drag and drop image here</h1>
+		<div style="background:#fff">
+		<table id="cartcontent" fitColumns="true" style="width:300px;height:auto;">
+			<thead>
+				<tr>
+					<th field="name">Name</th>
+					<th field="quantity" align="right">Quantity</th>
+					<th field="price" align="right">Price</th>
+				</tr>
+			</thead>
+		</table>
+		
+		</div>
+		
+		<h2><apex:commandButton value="Select Your Team" onclick="addPlayers();" /></h2>
+	</div>
+</body>
+</apex:form>
+</apex:page>

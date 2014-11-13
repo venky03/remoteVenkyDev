@@ -1,0 +1,116 @@
+<apex:page standardController="Contact" sidebar="false" showHeader="true" standardStylesheets="true" extensions="DeveloperExtension2" id="page1" >
+ 
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.Downloadify, 'Downloadify/css/jquery-ui.css')}" />
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.Downloadify, 'Downloadify/css/ui.jqgrid.css')}" />
+<script type="text/JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"/>
+<script type="text/javascript" src="{!URLFOR($Resource.Downloadify, 'Downloadify/js/grid.locale-en.js')}"/>
+<script type="text/javascript" src="{!URLFOR($Resource.Downloadify, 'Downloadify/js/jquery.jqGrid.min.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.Downloadify, 'Downloadify/js/swfobject.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.Downloadify, 'Downloadify/src/downloadify.js')}"/>
+ 
+<script type="text/JavaScript">  
+        var gridData;
+        var obj;
+    function search(jsonString) {
+        $("#pdata").jqGrid("GridUnload");
+        gridData=JSON.stringify(jsonString);    
+        obj = JSON.parse(gridData);
+        jQuery("#pdata").jqGrid({
+        data: jsonString,
+        datatype: 'local',
+        colNames:['Name','Email','Account Name'],
+        colModel:[
+            {name:'Name',index:'Name', width:40},
+            {name:'Email',index:'Email', width:40},
+            {name:'Account Name',index:'Name', width:40}],
+        rowNum:10,
+        rowList:[5,10,20,30,50,100, 1000],
+        pager: '#ppdata',
+        sortname: 'name',
+        viewrecords: true,
+        sortorder: "desc",
+        caption:"Contact Data",
+        width: 800,
+        height: 180,   
+    });   
+   $("#pdata").trigger("reloadGrid");
+ }
+ 
+function showDataInJqGrid(){
+    var accName = document.getElementById("query").value;
+    contactSearch(accName);
+}
+ 
+function contactSearch(name) {
+    var jsonString;
+    DeveloperExtension2.showContacts(name,handleContacts);
+}
+ 
+function handleContacts(result, event) {
+    if(event.type == 'exception'){
+        alert(event.message);
+    }else{
+        jsonString = result;
+        search(jsonString);
+        gridData = JSON.stringify(jsonString);
+    }
+}
+ 
+function downloadRecords(){
+    console.log('inside download');
+    var downloadData = 'Name,Email\r\n';
+    for(var i = 0; i < jsonString.length; i++) {
+       var obj = jsonString[i];
+       downloadData += obj.Name + ',' + obj.Email + '\r\n';      
+    }
+    Downloadify.create('downloadify',{
+    filename: function(){
+      return 'file1.csv';
+    },
+    data: function(){
+      return downloadData;
+    },
+    onComplete: function(){
+      alert('Your File Has Been Saved!');
+    },
+    onCancel: function(){
+      alert('You have cancelled the saving of this file.');
+    },
+    onError: function(){
+      alert('You must put something in the File Contents or there will be nothing to save!');
+    },
+    dataType: 'string',
+    transparent: false,   
+    swf: "{!URLFOR($Resource.Downloadify, 'Downloadify/media/downloadify.swf')}",
+    downloadImage: "{!URLFOR($Resource.Downloadify, 'Downloadify/images/download.png')}",
+    width: 100,
+    height: 30,
+    transparent: true,
+    append: false
+  });
+}
+</script> 
+ 
+<apex:sectionHeader title="Contact Search using AccountID" subtitle="Search Contact" />
+  <apex:pageBlock mode="maindetail">
+    <apex:form id="qform" >
+            <apex:pageBlockSection title="Search Contact for the Account" collapsible="false" columns="1" >
+                <table width="100%">
+                    <tr>
+                        <td><h3>Enter Account Name </h3>&nbsp;&nbsp;<input type="text" id="query" />&nbsp;&nbsp;&nbsp;
+                            <input type="button" value="Show Contacts" class="btn" onclick="showDataInJqGrid();" />&nbsp;&nbsp;&nbsp;
+                            <input type="button" value="Download Records" class="btn" onclick="downloadRecords();" />&nbsp;&nbsp;&nbsp;
+                        </td>
+                    </tr>
+                </table>
+            </apex:pageBlocksection>
+    </apex:form>
+    
+    <apex:pageBlockSection title="Contacts in Response" collapsible="false" rendered="true">               
+        <div id="response" style="font-size: 16px;width: 300px;font-family: monospace; font-stretch: expanded" />               
+        <table id="pdata"></table>
+        <div id="ppdata"></div>      
+        <div id="downloadify"></div>
+    </apex:pageBlocksection>   
+  </apex:pageblock>
+</apex:page>

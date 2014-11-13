@@ -1,0 +1,8 @@
+<apex:page controller="XMLWrite_Try">
+<apex:form >
+<apex:commandButton action="{!getxmlRes}" value="Get XML" />
+<!--  <apex:inputTextArea value="{!xmlStringxmlRes}" /> -->
+<apex:outputLabel >InventoryId Recieved is :</apex:outputLabel> 
+<apex:outputText value="{!inventoryID}" />
+</apex:form>
+</apex:page>
